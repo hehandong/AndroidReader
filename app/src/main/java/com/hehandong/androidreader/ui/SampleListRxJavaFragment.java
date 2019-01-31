@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
+import com.hehandong.androidreader.HomeActivity;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
 import com.hehandong.androidreader.Retrofit.module.BaseModel;
@@ -26,10 +27,7 @@ import com.hehandong.retrofithelper.utils.RxUtil;
 import java.util.ArrayList;
 
 
-/**
- * Created by Stay on 8/3/16.
- * Powered by www.stay4it.com
- */
+
 public class SampleListRxJavaFragment extends BaseListFragment<Benefit> implements ITabFragment {
     private int page = 1;
 
@@ -154,8 +152,8 @@ public class SampleListRxJavaFragment extends BaseListFragment<Benefit> implemen
 
         @Override
         public void onItemClick(View view, int position) {
-            if (getContext() instanceof SampleListRxJavaActivity) {
-                ((SampleListRxJavaActivity) getContext()).showPhoteFragment(mDataList,position);
+            if (getContext() instanceof HomeActivity) {
+                ((HomeActivity) getContext()).showPhoteFragment(mDataList,position);
             }
         }
 

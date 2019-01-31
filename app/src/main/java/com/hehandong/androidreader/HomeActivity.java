@@ -3,17 +3,22 @@ package com.hehandong.androidreader;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.hehandong.androidreader.Retrofit.module.Benefit;
+import com.hehandong.androidreader.ui.PhotoFragment;
 import com.hehandong.androidreader.ui.SampleListRxJavaFragment;
 import com.hehandong.androidreader.utils.LogUtil;
 import com.hehandong.androidreader.widgets.BottomNavigationViewHelper;
 
+import java.util.ArrayList;
+
 public class HomeActivity extends AppCompatActivity {
 
-    private SampleListRxJavaFragment mSampleListFragment;
+    private Fragment mFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -49,22 +54,26 @@ public class HomeActivity extends AppCompatActivity {
     }
 
 
+
     public void showSampleListFragment() {
-        if (mSampleListFragment != null) {
-            mSampleListFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
-            LogUtil.e(mSampleListFragment.toString());
+        if (mFragment != null && mFragment instanceof SampleListRxJavaFragment) {
+            mFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
         } else {
-            mSampleListFragment = new SampleListRxJavaFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mSampleListFragment, "SampleListRxJavaFragment").commit();
+            mFragment = new SampleListRxJavaFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "SampleListRxJavaFragment").commit();
         }
     }
 
     public void hideSampleListFragment() {
-        if (mSampleListFragment != null) {
-            mSampleListFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
-            getSupportFragmentManager().beginTransaction().remove(mSampleListFragment).commit();
-            mSampleListFragment = null;
+        if (mFragment != null) {
+            getSupportFragmentManager().beginTransaction().remove(mFragment).commit();
+            mFragment = null;
         }
+    }
+
+    public void showPhoteFragment(ArrayList<Benefit> images, int position){
+        mFragment = PhotoFragment.newInstance(images,position);
+        getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "photoFragment").commit();
     }
 
 }
