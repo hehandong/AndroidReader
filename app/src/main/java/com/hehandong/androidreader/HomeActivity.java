@@ -7,9 +7,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.hehandong.androidreader.ui.SampleListRxJavaFragment;
+import com.hehandong.androidreader.utils.LogUtil;
+import com.hehandong.androidreader.widgets.BottomNavigationViewHelper;
+
 public class HomeActivity extends AppCompatActivity {
 
-    private TextView mTextMessage;
+    private SampleListRxJavaFragment mSampleListFragment;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,16 +22,16 @@ public class HomeActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    hideSampleListFragment();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    hideSampleListFragment();
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    hideSampleListFragment();
                     return true;
                 case R.id.navigation_serve:
-                    mTextMessage.setText(R.string.title_serve);
+                    showSampleListFragment();
                     return true;
             }
             return false;
@@ -39,9 +43,28 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        mTextMessage = findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+    }
+
+
+    public void showSampleListFragment() {
+        if (mSampleListFragment != null) {
+            mSampleListFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
+            LogUtil.e(mSampleListFragment.toString());
+        } else {
+            mSampleListFragment = new SampleListRxJavaFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mSampleListFragment, "SampleListRxJavaFragment").commit();
+        }
+    }
+
+    public void hideSampleListFragment() {
+        if (mSampleListFragment != null) {
+            mSampleListFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
+            getSupportFragmentManager().beginTransaction().remove(mSampleListFragment).commit();
+            mSampleListFragment = null;
+        }
     }
 
 }

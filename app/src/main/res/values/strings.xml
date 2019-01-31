@@ -16,4 +16,16 @@
     <string name="progress_dialog_title">Progress Dialog</string>
     <string name="progress_please_wait">Please wait…</string>
     <string name="title_activity_main2">Main2Activity</string>
+
+    <string name="title_framework_main">快速搭建项目(MD版)</string>
+    <string name="title_recycler_activity">我在Activity</string>
+    <string name="title_recycler_fragment">我在Fragment</string>
+    <string name="title_recycler_section_activity">SectionRecyclerActivity</string>
+    <string name="title_recycler_section_fragment">SectionRecyclerFragment</string>
+
+    <string name="home_tab_news">新闻</string>
+    <string name="home_tab_read">阅读</string>
+    <string name="home_tab_audio">试听</string>
+    <string name="home_tab_topic">话题</string>
+    <string name="home_tab_profile">我</string>
 </resources>
