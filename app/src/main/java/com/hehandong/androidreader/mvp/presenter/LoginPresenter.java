@@ -30,7 +30,7 @@ public class LoginPresenter extends BasePresenter<LoginContract.View> implements
         }
         mView.showLoading();
         model.login(username, password)
-                .compose(RxScheduler.<BaseObjectBean<LoginBean>>Flo_io_main())
+                .compose(RxScheduler.<BaseObjectBean<LoginBean>>flowableIO2Main())
                 .as(mView.<BaseObjectBean<LoginBean>>bindAutoDispose())
                 .subscribe(new Consumer<BaseObjectBean<LoginBean>>() {
                     @Override

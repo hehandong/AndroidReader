@@ -20,7 +20,7 @@ public class RxScheduler {
      * @param <T> 指定的泛型类型
      * @return FlowableTransformer
      */
-    public static <T> FlowableTransformer<T, T> Flo_io_main() {
+    public static <T> FlowableTransformer<T, T> flowableIO2Main() {
         return new FlowableTransformer<T, T>() {
             @Override
             public Publisher<T> apply(@NonNull Flowable<T> upstream) {
@@ -36,7 +36,7 @@ public class RxScheduler {
      * @param <T> 指定的泛型类型
      * @return ObservableTransformer
      */
-    public static <T> ObservableTransformer<T, T> Obs_io_main() {
+    public static <T> ObservableTransformer<T, T> ObservableIO2Main() {
         return new ObservableTransformer<T, T>() {
             @Override
             public ObservableSource<T> apply(Observable<T> upstream) {

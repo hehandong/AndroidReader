@@ -1,4 +1,4 @@
-package com.hehandong.androidreader;
+package com.hehandong.androidreader.ui;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,19 +6,22 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
-import android.widget.TextView;
 
+import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.module.Benefit;
-import com.hehandong.androidreader.ui.PhotoFragment;
-import com.hehandong.androidreader.ui.SampleListRxJavaFragment;
-import com.hehandong.androidreader.utils.LogUtil;
 import com.hehandong.androidreader.widgets.BottomNavigationViewHelper;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class HomeActivity extends AppCompatActivity {
 
     private Fragment mFragment;
+
+    @BindView(R.id.navigation)
+    BottomNavigationView mNavigation;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -33,7 +36,7 @@ public class HomeActivity extends AppCompatActivity {
                     hideSampleListFragment();
                     return true;
                 case R.id.navigation_notifications:
-                    hideSampleListFragment();
+                    showLoginFragment();
                     return true;
                 case R.id.navigation_serve:
                     showSampleListFragment();
@@ -43,24 +46,28 @@ public class HomeActivity extends AppCompatActivity {
         }
     };
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        BottomNavigationView navigation = findViewById(R.id.navigation);
-        BottomNavigationViewHelper.disableShiftMode(navigation);
-        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        ButterKnife.bind(this);
+
+        mNavigation = findViewById(R.id.navigation);
+        BottomNavigationViewHelper.disableShiftMode(mNavigation);
+        mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
 
 
     public void showSampleListFragment() {
-        if (mFragment != null && mFragment instanceof SampleListRxJavaFragment) {
-            mFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
+        if (mFragment != null && mFragment instanceof PhotoListFragment) {
+            mFragment = (PhotoListFragment) getSupportFragmentManager().findFragmentByTag("PhotoList2Fragment");
         } else {
-            mFragment = new SampleListRxJavaFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "SampleListRxJavaFragment").commit();
+            mFragment = new PhotoListFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "PhotoList2Fragment").commit();
         }
     }
 
@@ -74,6 +81,11 @@ public class HomeActivity extends AppCompatActivity {
     public void showPhoteFragment(ArrayList<Benefit> images, int position){
         mFragment = PhotoFragment.newInstance(images,position);
         getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "photoFragment").commit();
+    }
+
+    public void showLoginFragment(){
+        mFragment = LoginFragment.newInstance();
+        getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mFragment, "LoginFragment").commit();
     }
 
 }

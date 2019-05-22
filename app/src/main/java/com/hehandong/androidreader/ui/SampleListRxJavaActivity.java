@@ -15,7 +15,7 @@ import java.util.ArrayList;
  */
 public class SampleListRxJavaActivity extends BaseActivity {
 
-    private SampleListRxJavaFragment mSampleListFragment;
+    private PhotoListFragment mSampleListFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,11 +36,11 @@ public class SampleListRxJavaActivity extends BaseActivity {
     protected void setUpData(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             LogUtil.e("onCreate(savedInstanceState);" + savedInstanceState);
-            mSampleListFragment = (SampleListRxJavaFragment) getSupportFragmentManager().findFragmentByTag("SampleListRxJavaFragment");
+            mSampleListFragment = (PhotoListFragment) getSupportFragmentManager().findFragmentByTag("PhotoList2Fragment");
             LogUtil.e(mSampleListFragment.toString());
         } else {
-            mSampleListFragment = new SampleListRxJavaFragment();
-            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mSampleListFragment, "SampleListRxJavaFragment").commit();
+            mSampleListFragment = new PhotoListFragment();
+            getSupportFragmentManager().beginTransaction().replace(R.id.mSampleListFragmentLayout, mSampleListFragment, "PhotoList2Fragment").commit();
         }
 
     }

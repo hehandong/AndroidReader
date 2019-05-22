@@ -46,4 +46,7 @@
     <color name="tab_green">#ff45c01a</color>
     <color name="widgets_general_tab_pressed">#0db35e</color>
     <color name="widgets_general_tab_normal">#aaa</color>
+
+    <color name="bg_app">#F1F1F1</color>
+    <color name="tab_unselect">#c9c9c9</color>
 </resources>

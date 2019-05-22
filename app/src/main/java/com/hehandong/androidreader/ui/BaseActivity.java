@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-import com.hehandong.androidreader.HomeActivity;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.utils.ConstantValues;
 import com.hehandong.androidreader.utils.LogUtil;

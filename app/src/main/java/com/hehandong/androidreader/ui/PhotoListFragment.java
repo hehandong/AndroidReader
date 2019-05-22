@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 
 import com.bumptech.glide.Glide;
-import com.hehandong.androidreader.HomeActivity;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
 import com.hehandong.androidreader.Retrofit.module.BaseModel;
@@ -28,11 +27,18 @@ import java.util.ArrayList;
 
 
 
-public class SampleListRxJavaFragment extends BaseListFragment<Benefit> implements ITabFragment {
+public class PhotoListFragment extends BaseListFragment<Benefit> implements ITabFragment {
     private int page = 1;
 
-    public static SampleListRxJavaFragment newInstance(int page) {
-        SampleListRxJavaFragment fragment = new SampleListRxJavaFragment();
+    public static PhotoListFragment newInstance() {
+        PhotoListFragment fragment = new PhotoListFragment();
+        Bundle bundle = new Bundle();
+        fragment.setArguments(bundle);
+        return fragment;
+    }
+
+    public static PhotoListFragment newInstance(int page) {
+        PhotoListFragment fragment = new PhotoListFragment();
         Bundle bundle = new Bundle();
         bundle.putInt(ConstantValues.KEY_FRAGMENT_PAGE, page);
         fragment.setArguments(bundle);
@@ -96,7 +102,7 @@ public class SampleListRxJavaFragment extends BaseListFragment<Benefit> implemen
         }
 
         RetrofitHelper.getCustomApiService()
-                .rxBenefits(20, page++)
+                .rxBenefits(12, page++)
                 .compose(RxUtil.<BaseModel<ArrayList<Benefit>>>rxSchedulerHelper2(this))
                 .subscribe(new CustomObserver<BaseModel<ArrayList<Benefit>>>() {
                     @Override
@@ -146,6 +152,7 @@ public class SampleListRxJavaFragment extends BaseListFragment<Benefit> implemen
                     .load(mDataList.get(position).url)
                     .centerCrop()
                     .placeholder(R.color.app_primary_color)
+                    .error(R.mipmap.ic_launcher)
                     .crossFade()
                     .into(mSampleListItemImg);
         }
