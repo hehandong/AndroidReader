@@ -212,4 +212,7 @@
         <item>馄饨类</item>
         <item>其他</item>
     </string-array>
+
+
+    <string name="public_mark">公众号</string>
 </resources>

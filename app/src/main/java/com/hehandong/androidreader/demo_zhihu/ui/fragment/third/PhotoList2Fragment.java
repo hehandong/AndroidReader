@@ -11,14 +11,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
-import com.hehandong.androidreader.Retrofit.module.BaseModel;
 import com.hehandong.androidreader.Retrofit.module.Benefit;
+import com.hehandong.androidreader.Retrofit.module.MeiziModel;
 import com.hehandong.androidreader.Retrofit.net.RetrofitHelper;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.Base2Fragment;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.BaseList2Fragment;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.ITab2Fragment;
 import com.hehandong.androidreader.ui.HomeActivity;
-import com.hehandong.androidreader.ui.ITabFragment;
 import com.hehandong.androidreader.utils.ConstantValues;
 import com.hehandong.androidreader.widgets.pull.BaseViewHolder;
 import com.hehandong.androidreader.widgets.pull.PullRecycler;
@@ -106,10 +105,10 @@ public class PhotoList2Fragment extends BaseList2Fragment<Benefit> implements IT
 
         RetrofitHelper.getCustomApiService()
                 .rxBenefits(20, page++)
-                .compose(RxUtil.<BaseModel<ArrayList<Benefit>>>rxSchedulerHelper2(this))
-                .subscribe(new CustomObserver<BaseModel<ArrayList<Benefit>>>() {
+                .compose(RxUtil.<MeiziModel>rxSchedulerHelper2(this))
+                .subscribe(new CustomObserver<MeiziModel>() {
                     @Override
-                    public void onSuccess(BaseModel<ArrayList<Benefit>> model) {
+                    public void onSuccess(MeiziModel model) {
                         LogUtils.i("results.size：" + model.results.size());
                         if (action == PullRecycler.ACTION_PULL_TO_REFRESH) {
                             mDataList.clear();

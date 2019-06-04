@@ -9,8 +9,13 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hehandong.androidreader.R;
+import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
+import com.hehandong.androidreader.Retrofit.module.WxArticleListModel;
+import com.hehandong.androidreader.Retrofit.net.WanAandroidManager;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.ContentFragment;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.MenuListFragment;
+import com.hehandong.retrofithelper.utils.LogUtils;
+import com.hehandong.retrofithelper.utils.RxUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -45,7 +50,7 @@ public class ShopFragment extends SupportFragment {
     private void initView(View view, Bundle savedInstanceState) {
         mToolbar = (Toolbar) view.findViewById(R.id.toolbar);
 
-        mToolbar.setTitle(R.string.shop);
+        mToolbar.setTitle(R.string.public_mark);
 
         if (findChildFragment(MenuListFragment.class) == null) {
             ArrayList<String> listMenus = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_menu)));
@@ -54,6 +59,17 @@ public class ShopFragment extends SupportFragment {
             // false:  不加入回退栈;  false: 不显示动画
             loadRootFragment(R.id.fl_content_container, ContentFragment.newInstance(listMenus.get(0)), false, false);
         }
+
+        WanAandroidManager.getAPI()
+                .getWxArticleList()
+                .compose(RxUtil.<WxArticleListModel>rxSchedulerHelper2(this))
+                .subscribe(new CustomObserver<WxArticleListModel>() {
+                    @Override
+                    public void onSuccess(WxArticleListModel model) {
+                        LogUtils.i("WanAandroidManager","results.size：" + model.toString());
+
+                    }
+                });
     }
 
     @Override

@@ -1,10 +1,7 @@
 package com.hehandong.androidreader.Retrofit.api;
 
 
-import com.hehandong.androidreader.Retrofit.module.BaseModel;
-import com.hehandong.androidreader.Retrofit.module.Benefit;
-
-import java.util.ArrayList;
+import com.hehandong.androidreader.Retrofit.module.MeiziModel;
 
 import io.reactivex.Observable;
 import retrofit2.Call;
@@ -17,13 +14,13 @@ import retrofit2.http.Path;
  */
 public interface Api {
     @GET("api/data/福利/{pageCount}/{pageIndex}")
-    Call<BaseModel<ArrayList<Benefit>>> defaultBenefits(
+    Call<MeiziModel> defaultBenefits(
             @Path("pageCount") int pageCount,
             @Path("pageIndex") int pageIndex
     );
 
     @GET("api/data/福利/{pageCount}/{pageIndex}")
-    Observable<BaseModel<ArrayList<Benefit>>> rxBenefits(
+    Observable<MeiziModel> rxBenefits(
             @Path("pageCount") int pageCount,
             @Path("pageIndex") int pageIndex
     );

@@ -13,7 +13,7 @@ public interface APIConstants {
     String HOST = "http://gank.io/";
     String API_SERVER_URL = HOST + "api/data/";
     String DOWNLOAD_URL="http://www.oitsme.com/download/oitsme.apk";
-    /// String API_SERVER_URL = HOST + PORT+"iocm/app/";
+    /// String API_SERVER_URL = BASE_URL + PORT+"iocm/app/";
     //  String API_SERVER_URL = "https://www.12306.cn/mormhweb/";
 
     //http://gank.io/api/data/福利/10/1
