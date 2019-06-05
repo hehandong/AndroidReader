@@ -10,10 +10,12 @@ import android.widget.Toast;
 
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
-import com.hehandong.androidreader.Retrofit.module.WxArticleListModel;
+import com.hehandong.androidreader.Retrofit.module.WxMenuListModel;
 import com.hehandong.androidreader.Retrofit.net.WanAandroidManager;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.ContentFragment;
 import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.MenuListFragment;
+import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.WxArticleListFragment;
+import com.hehandong.androidreader.demo_zhihu.ui.fragment.third.child.child.WxMenuFragment;
 import com.hehandong.retrofithelper.utils.LogUtils;
 import com.hehandong.retrofithelper.utils.RxUtil;
 
@@ -54,22 +56,31 @@ public class ShopFragment extends SupportFragment {
 
         if (findChildFragment(MenuListFragment.class) == null) {
             ArrayList<String> listMenus = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_menu)));
-            MenuListFragment menuListFragment = MenuListFragment.newInstance(listMenus);
-            loadRootFragment(R.id.fl_list_container, menuListFragment);
+
+//            MenuListFragment menuListFragment = MenuListFragment.newInstance(listMenus);
+//            loadRootFragment(R.id.fl_list_container, menuListFragment);
+
+            WanAandroidManager.getAPI()
+                    .getWxMenuList()
+                    .compose(RxUtil.<WxMenuListModel>rxSchedulerHelper2(this))
+                    .subscribe(new CustomObserver<WxMenuListModel>() {
+                        @Override
+                        public void onSuccess(WxMenuListModel model) {
+                            LogUtils.i("WanAandroidManager", "results.size：" + model.toString());
+
+                            WxMenuFragment wxMenuFragment = WxMenuFragment.newInstance(model);
+                            loadRootFragment(R.id.fl_list_container, wxMenuFragment);
+
+                        }
+                    });
+
+
             // false:  不加入回退栈;  false: 不显示动画
-            loadRootFragment(R.id.fl_content_container, ContentFragment.newInstance(listMenus.get(0)), false, false);
+//            loadRootFragment(R.id.fl_content_container, ContentFragment.newInstance(listMenus.get(0)), false, false);
+            loadRootFragment(R.id.fl_content_container, WxArticleListFragment.newInstance(null), false, false);
         }
 
-        WanAandroidManager.getAPI()
-                .getWxArticleList()
-                .compose(RxUtil.<WxArticleListModel>rxSchedulerHelper2(this))
-                .subscribe(new CustomObserver<WxArticleListModel>() {
-                    @Override
-                    public void onSuccess(WxArticleListModel model) {
-                        LogUtils.i("WanAandroidManager","results.size：" + model.toString());
 
-                    }
-                });
     }
 
     @Override
@@ -86,6 +97,18 @@ public class ShopFragment extends SupportFragment {
      */
     public void switchContentFragment(ContentFragment fragment) {
         SupportFragment contentFragment = findChildFragment(ContentFragment.class);
+        if (contentFragment != null) {
+            contentFragment.replaceFragment(fragment, false);
+        }
+    }
+
+    /**
+     * 替换加载 内容Fragment
+     *
+     * @param fragment
+     */
+    public void switchWxArticleListFragment(WxArticleListFragment fragment) {
+        SupportFragment contentFragment = findChildFragment(WxArticleListFragment.class);
         if (contentFragment != null) {
             contentFragment.replaceFragment(fragment, false);
         }

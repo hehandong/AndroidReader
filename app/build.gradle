@@ -16,6 +16,11 @@ android {
         versionCode 1
         versionName "1.0"
 
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi' //, 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+        }
+
     }
     buildTypes {
         release {
@@ -27,6 +32,10 @@ android {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    implementation project(':retrofithelper')
+    testImplementation 'junit:junit:4.12'
+
     implementation "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
     implementation "com.android.support:support-v4:$rootProject.supportLibraryVersion"
     implementation "com.android.support:design:$rootProject.supportLibraryVersion"
@@ -37,18 +46,6 @@ dependencies {
     implementation "com.jakewharton:butterknife:$rootProject.butterknifeVersion"
     implementation 'com.android.support:support-v4:27.1.1'
     annotationProcessor "com.jakewharton:butterknife-compiler:$rootProject.butterknifeVersion"
-
-    //    //okhttp3
-    //    implementation "com.squareup.okhttp3:okhttp:$rootProject.okhttp3Version"
-    //    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.okhttp3Version"
-    //    //retrofit2
-
-    //    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofit2Version"
-    //    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofit2Version"
-    //    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.retrofit2Version"
-    //    //rxjava2
-    //    implementation "io.reactivex.rxjava2:rxjava:$rootProject.rxjavaVersion"
-    //    implementation "io.reactivex.rxjava2:rxandroid:$rootProject.rxandroidVersion"
 
     //AutoDispose解决RxJava内存泄漏
     implementation "com.uber.autodispose:autodispose:$rootProject.autodisposeVersion"
@@ -76,7 +73,12 @@ dependencies {
 // Your EventBus's version
     implementation 'org.greenrobot:eventbus:3.0.0'
 
-    implementation project(':retrofithelper')
+    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'me.drakeet.support:toastcompat:1.1.0'
 
-    testImplementation 'junit:junit:4.12'
+    implementation 'com.tencent.bugly:crashreport:latest.release' //其中latest.release指代最新Bugly SDK版本号，也可以指定明确的版本号，例如2.1.9
+    implementation 'com.tencent.bugly:nativecrashreport:latest.release' //其中latest.release指代最新Bugly NDK版本号，也可以指定明确的版本号，例如3.0
+
+
+
 }
