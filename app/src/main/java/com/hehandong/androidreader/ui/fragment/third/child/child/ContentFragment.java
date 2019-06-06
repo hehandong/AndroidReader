@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.ui.fragment.CycleFragment;
-import com.hehandong.androidreader.ui.fragment.third.child.ShopFragment;
+import com.hehandong.androidreader.ui.fragment.third.child.WxFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
@@ -72,8 +72,8 @@ public class ContentFragment extends SupportFragment {
             @Override
             public void onClick(View v) {
                 // 和MsgFragment同级别的跳转 交给MsgFragment处理
-                if (getParentFragment() instanceof ShopFragment) {
-                    ((ShopFragment) getParentFragment()).start(CycleFragment.newInstance(1));
+                if (getParentFragment() instanceof WxFragment) {
+                    ((WxFragment) getParentFragment()).start(CycleFragment.newInstance(1));
                 }
             }
         });

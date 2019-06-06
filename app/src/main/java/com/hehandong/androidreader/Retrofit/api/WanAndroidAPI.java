@@ -3,6 +3,7 @@ package com.hehandong.androidreader.Retrofit.api;
 import com.hehandong.androidreader.Retrofit.module.WanBaseModel;
 import com.hehandong.androidreader.Retrofit.module.WxArticleListModel;
 import com.hehandong.androidreader.Retrofit.module.WxMenuListModel;
+import com.hehandong.androidreader.Retrofit.module.reponse.HomeListModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -24,6 +25,13 @@ public interface WanAndroidAPI {
     @GET("wxarticle/list/{chapterId}/{pageIndex}/json")
     Observable<WanBaseModel<WxArticleListModel>> getWxArticleList(
             @Path("chapterId") int chapterId,
+            @Path("pageIndex") int pageIndex
+    );
+
+    //首页文章列表
+    //https://www.wanandroid.com/article/list/0/json
+    @GET("article/list/{pageIndex}/json")
+    Observable<WanBaseModel<HomeListModel>> getHomeList(
             @Path("pageIndex") int pageIndex
     );
 }

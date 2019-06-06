@@ -54,7 +54,7 @@ public class WxArticleListFragment extends SupportFragment implements SwipeRefre
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_second_pager_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
         EventBusActivityScope.getDefault(_mActivity).register(this);
         initView(view);
         return view;
@@ -70,7 +70,6 @@ public class WxArticleListFragment extends SupportFragment implements SwipeRefre
         mAdapter = new WxArticleListAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
-
         mRecy.setAdapter(mAdapter);
 
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
@@ -78,15 +77,12 @@ public class WxArticleListFragment extends SupportFragment implements SwipeRefre
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
                 // 这里的DetailFragment在flow包里
                 // 这里是父Fragment启动,要注意 栈层级
-//                ((SupportFragment) getParentFragment()).start(WxArticleFragment.newInstance(mAdapter.getItem(position).getTitle()));
-
-//                openDetail(mAdapter.getItem(position));
 
                 WxArticleListModel.DatasBean item = mAdapter.getItem(position);
                 String title = item.getTitle();
                 String link = item.getLink();
 
-                ((SupportFragment) getParentFragment()).start(WxArticleFragment.newInstance(title,link));
+                ((SupportFragment) getParentFragment()).start(ArticleFragment.newInstance(title,link));
 
             }
         });

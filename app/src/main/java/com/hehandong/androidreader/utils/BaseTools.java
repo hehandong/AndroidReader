@@ -207,6 +207,7 @@ public class BaseTools {
         context.startActivity(intent);
     }
 
+
     /**
      * 判断手机是否安装某个应用
      *
@@ -216,6 +217,7 @@ public class BaseTools {
      */
     public static boolean isApplicationAvilible(Context context, String appPackageName) {
         try {
+
             // 获取packagemanager
             PackageManager packageManager = context.getPackageManager();
             // 获取所有已安装程序的包信息

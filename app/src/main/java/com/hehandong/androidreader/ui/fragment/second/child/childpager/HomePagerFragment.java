@@ -10,39 +10,42 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hehandong.androidreader.R;
-import com.hehandong.androidreader.ui.ZhiHuMainActivity;
-import com.hehandong.androidreader.adapter.HomeAdapter;
-import com.hehandong.androidreader.entity.Article;
+import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
+import com.hehandong.androidreader.Retrofit.module.WanBaseModel;
+import com.hehandong.androidreader.Retrofit.module.reponse.HomeListModel;
+import com.hehandong.androidreader.Retrofit.net.WanAandroidManager;
+import com.hehandong.androidreader.adapter.HomeListAdapter;
 import com.hehandong.androidreader.event.TabSelectedEvent;
 import com.hehandong.androidreader.listener.OnItemClickListener;
-import com.hehandong.androidreader.ui.fragment.second.child.DetailFragment;
+import com.hehandong.androidreader.ui.ZhiHuMainActivity;
+import com.hehandong.androidreader.ui.fragment.third.child.child.ArticleFragment;
+import com.hehandong.retrofithelper.utils.RxUtil;
 
 import org.greenrobot.eventbus.Subscribe;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import me.yokeyword.eventbusactivityscope.EventBusActivityScope;
 import me.yokeyword.fragmentation.SupportFragment;
 
 
 /**
- * Created by YoKeyword on 16/6/3.
+ * @Author dong
+ * @Date 2019-06-04 15:40
+ * @Description 玩Android的首页
+ * GitHub：https://github.com/hehandong
+ * Email：hehandong@qq.com
+ * @Version 1.0
  */
-public class FirstPagerFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
+public class HomePagerFragment extends SupportFragment implements SwipeRefreshLayout.OnRefreshListener {
     private RecyclerView mRecy;
     private SwipeRefreshLayout mRefreshLayout;
-    private HomeAdapter mAdapter;
+    private HomeListAdapter mAdapter;
     private boolean mAtTop = true;
     private int mScrollTotal;
-    private String[] mTitles;
-    private String[] mContents;
 
-    public static FirstPagerFragment newInstance() {
+    public static HomePagerFragment newInstance() {
 
         Bundle args = new Bundle();
-
-        FirstPagerFragment fragment = new FirstPagerFragment();
+        HomePagerFragment fragment = new HomePagerFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -50,7 +53,7 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_second_pager_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_second_pager_first, container, false);
         EventBusActivityScope.getDefault(_mActivity).register(this);
         initView(view);
         return view;
@@ -60,13 +63,10 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
         mRecy = (RecyclerView) view.findViewById(R.id.recy);
         mRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.refresh_layout);
 
-        mTitles = getResources().getStringArray(R.array.array_title);
-        mContents = getResources().getStringArray(R.array.array_content);
-
         mRefreshLayout.setColorSchemeResources(R.color.colorPrimary);
         mRefreshLayout.setOnRefreshListener(this);
 
-        mAdapter = new HomeAdapter(_mActivity);
+        mAdapter = new HomeListAdapter(_mActivity);
         LinearLayoutManager manager = new LinearLayoutManager(_mActivity);
         mRecy.setLayoutManager(manager);
         mRecy.setAdapter(mAdapter);
@@ -76,18 +76,27 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
                 // 这里的DetailFragment在flow包里
                 // 这里是父Fragment启动,要注意 栈层级
-                ((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
+//                ((SupportFragment) getParentFragment()).start(DetailFragment.newInstance(mAdapter.getItem(position).getTitle()));
+
+                HomeListModel.DatasBean item = mAdapter.getItem(position);
+                String title = item.getTitle();
+                String link = item.getLink();
+
+                ((SupportFragment) getParentFragment()).start(ArticleFragment.newInstance(title,link));
             }
         });
 
         // Init Datas
-        List<Article> articleList = new ArrayList<>();
-        for (int i = 0; i < 15; i++) {
-            int index = (int) (Math.random() * 3);
-            Article article = new Article(mTitles[index], mContents[index]);
-            articleList.add(article);
-        }
-        mAdapter.setDatas(articleList);
+        WanAandroidManager.getAPI()
+                .getHomeList(0)
+                .compose(RxUtil.<WanBaseModel<HomeListModel>>rxSchedulerHelper2(this))
+                .subscribe(new CustomObserver<WanBaseModel<HomeListModel>>() {
+                    @Override
+                    public void onSuccess(WanBaseModel<HomeListModel> model) {
+                        mAdapter.setDatas(model);
+                    }
+                });
+
 
         mRecy.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -122,7 +131,9 @@ public class FirstPagerFragment extends SupportFragment implements SwipeRefreshL
      */
     @Subscribe
     public void onTabSelectedEvent(TabSelectedEvent event) {
-        if (event.position != ZhiHuMainActivity.SECOND) return;
+        if (event.position != ZhiHuMainActivity.SECOND) {
+            return;
+        }
 
         if (mAtTop) {
             mRefreshLayout.setRefreshing(true);

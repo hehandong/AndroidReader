@@ -14,13 +14,13 @@ import com.hehandong.androidreader.ui.fragment.first.child.FirstHomeFragment;
 /**
  * Created by YoKeyword on 16/6/3.
  */
-public class ZhihuFirstFragment extends BaseMainFragment {
+public class FirstFragment extends BaseMainFragment {
 
-    public static ZhihuFirstFragment newInstance() {
+    public static FirstFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ZhihuFirstFragment fragment = new ZhihuFirstFragment();
+        FirstFragment fragment = new FirstFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,7 +28,7 @@ public class ZhihuFirstFragment extends BaseMainFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_first, container, false);
+        View view = inflater.inflate(R.layout.fragment_first, container, false);
         return view;
     }
 

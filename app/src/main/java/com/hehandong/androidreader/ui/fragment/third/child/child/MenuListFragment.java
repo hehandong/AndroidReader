@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.adapter.MenuAdapter;
 import com.hehandong.androidreader.listener.OnItemClickListener;
-import com.hehandong.androidreader.ui.fragment.third.child.ShopFragment;
+import com.hehandong.androidreader.ui.fragment.third.child.WxFragment;
 
 import java.util.ArrayList;
 
@@ -107,7 +107,7 @@ public class MenuListFragment extends SupportFragment {
 
         ContentFragment fragment = ContentFragment.newInstance(mMenus.get(position));
 
-        ((ShopFragment) getParentFragment()).switchContentFragment(fragment);
+        ((WxFragment) getParentFragment()).switchContentFragment(fragment);
     }
 
     @Override

@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hehandong.androidreader.R;
-import com.hehandong.androidreader.ui.fragment.fourth.ZhihuFourthFragment;
+import com.hehandong.androidreader.ui.fragment.fourth.FourthFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -49,7 +49,7 @@ public class MeFragment extends SupportFragment {
     @Override
     public boolean onBackPressedSupport() {
         // 这里实际项目中推荐使用 EventBus接耦
-        ((ZhihuFourthFragment)getParentFragment()).onBackToFirstFragment();
+        ((FourthFragment)getParentFragment()).onBackToFirstFragment();
         return true;
     }
 }

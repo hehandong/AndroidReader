@@ -16,15 +16,15 @@ import com.hehandong.androidreader.ui.fragment.fourth.child.MeFragment;
 /**
  * Created by YoKeyword on 16/6/3.
  */
-public class ZhihuFourthFragment extends BaseMainFragment {
+public class FourthFragment extends BaseMainFragment {
     private Toolbar mToolbar;
     private View mView;
 
-    public static ZhihuFourthFragment newInstance() {
+    public static FourthFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ZhihuFourthFragment fragment = new ZhihuFourthFragment();
+        FourthFragment fragment = new FourthFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +32,7 @@ public class ZhihuFourthFragment extends BaseMainFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        mView = inflater.inflate(R.layout.zhihu_fragment_fourth, container, false);
+        mView = inflater.inflate(R.layout.fragment_fourth, container, false);
         return mView;
     }
 

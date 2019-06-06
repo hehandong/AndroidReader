@@ -8,19 +8,19 @@ import android.view.ViewGroup;
 
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.base.BaseMainFragment;
-import com.hehandong.androidreader.ui.fragment.third.child.ShopFragment;
+import com.hehandong.androidreader.ui.fragment.third.child.WxFragment;
 
 
 /**
  * Created by YoKeyword on 16/6/3.
  */
-public class ZhihuThirdFragment extends BaseMainFragment {
+public class ThirdFragment extends BaseMainFragment {
 
-    public static ZhihuThirdFragment newInstance() {
+    public static ThirdFragment newInstance() {
 
         Bundle args = new Bundle();
 
-        ZhihuThirdFragment fragment = new ZhihuThirdFragment();
+        ThirdFragment fragment = new ThirdFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,7 +28,7 @@ public class ZhihuThirdFragment extends BaseMainFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_third, container, false);
+        View view = inflater.inflate(R.layout.fragment_third, container, false);
         return view;
     }
 
@@ -36,9 +36,9 @@ public class ZhihuThirdFragment extends BaseMainFragment {
     public void onLazyInitView(@Nullable Bundle savedInstanceState) {
         super.onLazyInitView(savedInstanceState);
 
-        if (findChildFragment(ShopFragment.class) == null) {
+        if (findChildFragment(WxFragment.class) == null) {
             // ShopFragment是flow包里的
-            loadRootFragment(R.id.fl_third_container, ShopFragment.newInstance());
+            loadRootFragment(R.id.fl_third_container, WxFragment.newInstance());
         }
     }
 }

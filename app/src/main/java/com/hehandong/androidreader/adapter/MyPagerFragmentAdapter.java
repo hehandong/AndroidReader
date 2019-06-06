@@ -4,17 +4,14 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.hehandong.androidreader.ui.fragment.second.child.childpager.FirstPagerFragment;
+import com.hehandong.androidreader.ui.fragment.second.child.childpager.HomePagerFragment;
 import com.hehandong.androidreader.ui.fragment.second.child.childpager.OtherPagerFragment;
 
 
-/**
- * Created by YoKeyword on 16/6/5.
- */
-public class ZhihuPagerFragmentAdapter extends FragmentPagerAdapter {
+public class MyPagerFragmentAdapter extends FragmentPagerAdapter {
     private String[] mTitles;
 
-    public ZhihuPagerFragmentAdapter(FragmentManager fm, String... titles) {
+    public MyPagerFragmentAdapter(FragmentManager fm, String... titles) {
         super(fm);
         mTitles = titles;
     }
@@ -22,7 +19,7 @@ public class ZhihuPagerFragmentAdapter extends FragmentPagerAdapter {
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return FirstPagerFragment.newInstance();
+            return HomePagerFragment.newInstance();
         } else {
             return OtherPagerFragment.newInstance(mTitles[position]);
         }

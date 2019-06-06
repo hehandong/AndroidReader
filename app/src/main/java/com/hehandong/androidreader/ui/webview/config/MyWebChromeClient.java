@@ -3,7 +3,7 @@ package com.hehandong.androidreader.ui.webview.config;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.ValueCallback;
@@ -11,6 +11,7 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
 import com.hehandong.androidreader.R;
+import com.hehandong.retrofithelper.utils.LogUtils;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -29,14 +30,14 @@ public class MyWebChromeClient extends WebChromeClient {
     public static int FILECHOOSER_RESULTCODE_FOR_ANDROID_5 = 2;
 
     private View mXProgressVideo;
-    private AppCompatActivity mActivity;
+    private FragmentActivity mActivity;
     private IWebPageView mIWebPageView;
     private View mXCustomView;
     private CustomViewCallback mXCustomViewCallback;
 
-    public MyWebChromeClient(IWebPageView mIWebPageView) {
+    public MyWebChromeClient(FragmentActivity activity, IWebPageView mIWebPageView) {
         this.mIWebPageView = mIWebPageView;
-        this.mActivity = (AppCompatActivity) mIWebPageView;
+        this.mActivity = activity;
     }
 
     // 播放网络视频时全屏会被调用的方法
@@ -88,6 +89,7 @@ public class MyWebChromeClient extends WebChromeClient {
     @Override
     public void onProgressChanged(WebView view, int newProgress) {
         super.onProgressChanged(view, newProgress);
+        LogUtils.i("WanAandroidManager", "onProgressChanged：" + newProgress);
         mIWebPageView.startProgress(newProgress);
     }
 

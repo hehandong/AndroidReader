@@ -2,7 +2,7 @@ package com.hehandong.androidreader.base;
 
 import android.content.Context;
 
-import com.hehandong.androidreader.ui.fragment.first.ZhihuFirstFragment;
+import com.hehandong.androidreader.ui.fragment.first.FirstFragment;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -40,7 +40,7 @@ public abstract class BaseMainFragment extends SupportFragment {
         if (getChildFragmentManager().getBackStackEntryCount() > 1) {
             popChild();
         } else {
-            if (this instanceof ZhihuFirstFragment) {   // 如果是 第一个Fragment 则退出app
+            if (this instanceof FirstFragment) {   // 如果是 第一个Fragment 则退出app
                 _mActivity.finish();
             } else {                                    // 如果不是,则回到第一个Fragment
                 mBackToFirstListener.onBackToFirstFragment();

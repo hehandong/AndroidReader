@@ -14,13 +14,11 @@ import com.hehandong.androidreader.ui.fragment.second.child.ViewPagerFragment;
 /**
  * Created by YoKeyword on 16/6/3.
  */
-public class ZhihuSecondFragment extends BaseMainFragment {
+public class SecondFragment extends BaseMainFragment {
 
-    public static ZhihuSecondFragment newInstance() {
-
+    public static SecondFragment newInstance() {
         Bundle args = new Bundle();
-
-        ZhihuSecondFragment fragment = new ZhihuSecondFragment();
+        SecondFragment fragment = new SecondFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -28,7 +26,7 @@ public class ZhihuSecondFragment extends BaseMainFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.zhihu_fragment_second, container, false);
+        View view = inflater.inflate(R.layout.fragment_second, container, false);
         return view;
     }
 

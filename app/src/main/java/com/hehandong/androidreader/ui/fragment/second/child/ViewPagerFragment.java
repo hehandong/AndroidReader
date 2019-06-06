@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.hehandong.androidreader.R;
-import com.hehandong.androidreader.adapter.ZhihuPagerFragmentAdapter;
+import com.hehandong.androidreader.adapter.MyPagerFragmentAdapter;
 
 import me.yokeyword.fragmentation.SupportFragment;
 
@@ -46,8 +46,8 @@ public class ViewPagerFragment extends SupportFragment {
         mTab.addTab(mTab.newTab());
         mTab.addTab(mTab.newTab());
 
-        mViewPager.setAdapter(new ZhihuPagerFragmentAdapter(getChildFragmentManager(),
-                getString(R.string.recommend), getString(R.string.hot), getString(R.string.favorite),
+        mViewPager.setAdapter(new MyPagerFragmentAdapter(getChildFragmentManager(),
+                getString(R.string.home),getString(R.string.recommend), getString(R.string.hot), getString(R.string.favorite),
                 getString(R.string.more)));
         mTab.setupWithViewPager(mViewPager);
     }

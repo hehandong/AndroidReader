@@ -12,7 +12,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
@@ -25,7 +24,9 @@ import com.hehandong.androidreader.ui.statusbar.StatusBarUtil;
 import com.hehandong.androidreader.ui.webview.config.IWebPageView;
 import com.hehandong.androidreader.ui.webview.config.ImageClickInterface;
 import com.hehandong.androidreader.ui.webview.config.MyWebChromeClient;
+import com.hehandong.androidreader.ui.webview.config.MyWebViewClient;
 import com.hehandong.androidreader.utils.CommonUtils;
+import com.hehandong.retrofithelper.utils.LogUtils;
 
 /**
  * 网页可以处理:
@@ -34,8 +35,8 @@ import com.hehandong.androidreader.utils.CommonUtils;
  * Thanks to: https://github.com/youlookwhat/WebViewStudy
  * contact me: http://www.jianshu.com/users/e43c6e979831/latest_articles
  */
-public class WxArticleFragment extends BaseBackFragment implements IWebPageView {
-    public static final String TAG = WxArticleFragment.class.getSimpleName();
+public class ArticleFragment extends BaseBackFragment implements IWebPageView {
+    public static final String TAG = ArticleFragment.class.getSimpleName();
     private static final int REQ_MODIFY_FRAGMENT = 100;
     private static final String ARG_TITLE = "arg_title";
     private static final String ARG_URL = "arg_url";
@@ -59,8 +60,8 @@ public class WxArticleFragment extends BaseBackFragment implements IWebPageView 
     private TextView tvGunTitle;
     private boolean isTitleFix;
 
-    public static WxArticleFragment newInstance(String title,String url) {
-        WxArticleFragment fragment = new WxArticleFragment();
+    public static ArticleFragment newInstance(String title, String url) {
+        ArticleFragment fragment = new ArticleFragment();
         Bundle bundle = new Bundle();
         bundle.putString(ARG_TITLE, title);
         bundle.putString(ARG_URL, url);
@@ -89,6 +90,28 @@ public class WxArticleFragment extends BaseBackFragment implements IWebPageView 
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        if (webView != null) {
+            webView.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+            webView.clearHistory();
+            ViewGroup parent = (ViewGroup) webView.getParent();
+            if (parent != null) {
+                parent.removeView(webView);
+            }
+            webView.removeAllViews();
+            webView.stopLoading();
+            webView.setWebChromeClient(null);
+            webView.setWebViewClient(null);
+            webView.destroy();
+            webView = null;
+            mProgressBar.clearAnimation();
+            tvGunTitle.clearAnimation();
+            tvGunTitle.clearFocus();
+        }
+
+        super.onDestroyView();
+    }
 
     /**
      * 这里演示:
@@ -167,11 +190,11 @@ public class WxArticleFragment extends BaseBackFragment implements IWebPageView 
         /** 设置字体默认缩放大小(改变网页字体大小,setTextSize  api14被弃用)*/
         ws.setTextZoom(100);
 
-//        mWebChromeClient = new MyWebChromeClient(this);
-        webView.setWebChromeClient(new WebChromeClient());
+        mWebChromeClient = new MyWebChromeClient(_mActivity, this);
+        webView.setWebChromeClient(mWebChromeClient);
         // 与js交互
         webView.addJavascriptInterface(new ImageClickInterface(_mActivity), "injectedObject");
-
+        webView.setWebViewClient(new MyWebViewClient(_mActivity, this));
         webView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -267,22 +290,27 @@ public class WxArticleFragment extends BaseBackFragment implements IWebPageView 
 
     @Override
     public void hindProgressBar() {
-
+        mProgressBar.setVisibility(View.GONE);
     }
 
     @Override
     public void showWebView() {
-
+        webView.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void hindWebView() {
-
+        webView.setVisibility(View.INVISIBLE);
     }
 
     @Override
     public void startProgress(int newProgress) {
-
+        LogUtils.i("WanAandroidManager", "startProgress：" + newProgress);
+        mProgressBar.setVisibility(View.VISIBLE);
+        mProgressBar.setProgress(newProgress);
+        if (newProgress == 100) {
+            mProgressBar.setVisibility(View.GONE);
+        }
     }
 
     @Override

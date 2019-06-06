@@ -7,14 +7,15 @@ import android.support.v4.app.ActivityCompat;
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.base.BaseMainFragment;
 import com.hehandong.androidreader.event.TabSelectedEvent;
-import com.hehandong.androidreader.ui.fragment.first.ZhihuFirstFragment;
+import com.hehandong.androidreader.ui.fragment.first.FirstFragment;
 import com.hehandong.androidreader.ui.fragment.first.child.FirstHomeFragment;
+import com.hehandong.androidreader.ui.fragment.fourth.FourthFragment;
 import com.hehandong.androidreader.ui.fragment.fourth.child.MeFragment;
-import com.hehandong.androidreader.ui.fragment.second.ZhihuSecondFragment;
+import com.hehandong.androidreader.ui.fragment.second.SecondFragment;
 import com.hehandong.androidreader.ui.fragment.second.child.ViewPagerFragment;
 import com.hehandong.androidreader.ui.fragment.third.PhotoList2Fragment;
-import com.hehandong.androidreader.ui.fragment.third.ZhihuThirdFragment;
-import com.hehandong.androidreader.ui.fragment.third.child.ShopFragment;
+import com.hehandong.androidreader.ui.fragment.third.ThirdFragment;
+import com.hehandong.androidreader.ui.fragment.third.child.WxFragment;
 import com.hehandong.androidreader.ui.view.BottomBar;
 import com.hehandong.androidreader.ui.view.BottomBarTab;
 
@@ -42,13 +43,13 @@ public class ZhiHuMainActivity extends SupportActivity implements BaseMainFragme
         super.onCreate(savedInstanceState);
         setContentView(R.layout.zhihu_activity_main);
 
-        SupportFragment firstFragment = findFragment(ZhihuFirstFragment.class);
+        SupportFragment firstFragment = findFragment(FirstFragment.class);
         if (firstFragment == null) {
-            mFragments[FIRST] = ZhihuFirstFragment.newInstance();
-            mFragments[SECOND] = ZhihuSecondFragment.newInstance();
-            mFragments[THIRD] = ZhihuThirdFragment.newInstance();
-//            mFragments[FOURTH] = ZhihuFourthFragment.newInstance();
-            mFragments[FOURTH] = PhotoList2Fragment.newInstance();
+            mFragments[FIRST] = FirstFragment.newInstance();
+            mFragments[SECOND] = SecondFragment.newInstance();
+            mFragments[THIRD] = ThirdFragment.newInstance();
+            mFragments[FOURTH] = FourthFragment.newInstance();
+//            mFragments[FOURTH] = PhotoList2Fragment.newInstance();
 
             loadMultipleRootFragment(R.id.fl_container, FIRST,
                     mFragments[FIRST],
@@ -60,10 +61,10 @@ public class ZhiHuMainActivity extends SupportActivity implements BaseMainFragme
 
             // 这里我们需要拿到mFragments的引用
             mFragments[FIRST] = firstFragment;
-            mFragments[SECOND] = findFragment(ZhihuSecondFragment.class);
-            mFragments[THIRD] = findFragment(ZhihuThirdFragment.class);
-//            mFragments[FOURTH] = findFragment(ZhihuFourthFragment.class);
-            mFragments[FOURTH] = findFragment(PhotoList2Fragment.class);
+            mFragments[SECOND] = findFragment(SecondFragment.class);
+            mFragments[THIRD] = findFragment(ThirdFragment.class);
+            mFragments[FOURTH] = findFragment(FourthFragment.class);
+//            mFragments[FOURTH] = findFragment(PhotoList2Fragment.class);
         }
 
         initView();
@@ -95,12 +96,12 @@ public class ZhiHuMainActivity extends SupportActivity implements BaseMainFragme
 
                 // 如果不在该类别Fragment的主页,则回到主页;
                 if (count > 1) {
-                    if (currentFragment instanceof ZhihuFirstFragment) {
+                    if (currentFragment instanceof FirstFragment) {
                         currentFragment.popToChild(FirstHomeFragment.class, false);
-                    } else if (currentFragment instanceof ZhihuSecondFragment) {
+                    } else if (currentFragment instanceof SecondFragment) {
                         currentFragment.popToChild(ViewPagerFragment.class, false);
-                    } else if (currentFragment instanceof ZhihuThirdFragment) {
-                        currentFragment.popToChild(ShopFragment.class, false);
+                    } else if (currentFragment instanceof ThirdFragment) {
+                        currentFragment.popToChild(WxFragment.class, false);
                     } else if (currentFragment instanceof PhotoList2Fragment) {
                         currentFragment.popToChild(MeFragment.class, false);
                     }

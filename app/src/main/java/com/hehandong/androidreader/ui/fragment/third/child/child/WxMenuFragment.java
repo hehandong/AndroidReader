@@ -16,7 +16,7 @@ import com.hehandong.androidreader.Retrofit.module.WxMenuListModel;
 import com.hehandong.androidreader.Retrofit.net.WanAandroidManager;
 import com.hehandong.androidreader.adapter.WxListAdapter;
 import com.hehandong.androidreader.listener.OnItemClickListener;
-import com.hehandong.androidreader.ui.fragment.third.child.ShopFragment;
+import com.hehandong.androidreader.ui.fragment.third.child.WxFragment;
 import com.hehandong.retrofithelper.utils.LogUtils;
 import com.hehandong.retrofithelper.utils.RxUtil;
 
@@ -24,7 +24,14 @@ import me.yokeyword.fragmentation.SupportFragment;
 import me.yokeyword.fragmentation.anim.DefaultNoAnimator;
 import me.yokeyword.fragmentation.anim.FragmentAnimator;
 
-
+/**
+ * @Author dong
+ * @Date 2019-06-04 15:40
+ * @Description TODO
+ * GitHub：https://github.com/hehandong
+ * Email：hehandong@qq.com
+ * @Version 1.0
+ */
 public class WxMenuFragment extends SupportFragment {
     private static final String WX_MENUS = "wx_menus";
     private static final String SAVE_STATE_POSITION = "save_state_position";
@@ -85,7 +92,7 @@ public class WxMenuFragment extends SupportFragment {
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position, View view, RecyclerView.ViewHolder vh) {
-                showContent(position);
+                showContent(position, false);
             }
         });
 
@@ -96,10 +103,13 @@ public class WxMenuFragment extends SupportFragment {
             mCurrentPosition = 0;
             mAdapter.setItemChecked(0);
         }
+
+        showContent(0, true);
     }
 
-    private void showContent(int position) {
-        if (position == mCurrentPosition) {
+    private void showContent(final int position, final boolean isFirst) {
+
+        if (!isFirst && position == mCurrentPosition) {
             return;
         }
 
@@ -110,15 +120,15 @@ public class WxMenuFragment extends SupportFragment {
         if (mWxMenuListModel != null && mWxMenuListModel.getData() != null) {
             WxMenuListModel.DataBean dataBean = mWxMenuListModel.getData().get(position);
             WanAandroidManager.getAPI()
-                    .getWxArticleList(dataBean.getId(),1)
+                    .getWxArticleList(dataBean.getId(), 1)
                     .compose(RxUtil.<WanBaseModel<WxArticleListModel>>rxSchedulerHelper2(this))
                     .subscribe(new CustomObserver<WanBaseModel<WxArticleListModel>>() {
                         @Override
                         public void onSuccess(WanBaseModel<WxArticleListModel> model) {
-                            LogUtils.i("WanAandroidManager","results.size：" + model.toString());
+                            LogUtils.i("WanAandroidManager", "results.size：" + model.toString());
 
-                            WxArticleListFragment fragment = WxArticleListFragment.newInstance(model);
-                            ((ShopFragment) getParentFragment()).switchWxArticleListFragment(fragment);
+
+                            ((WxFragment) getParentFragment()).switchWxArticleListFragment(model, isFirst);
                         }
                     });
 

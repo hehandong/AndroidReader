@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.hehandong.androidreader.R;
 import com.hehandong.androidreader.Retrofit.costomCore.CustomObserver;
+import com.hehandong.androidreader.Retrofit.module.WanBaseModel;
+import com.hehandong.androidreader.Retrofit.module.WxArticleListModel;
 import com.hehandong.androidreader.Retrofit.module.WxMenuListModel;
 import com.hehandong.androidreader.Retrofit.net.WanAandroidManager;
 import com.hehandong.androidreader.ui.fragment.third.child.child.ContentFragment;
@@ -19,24 +21,26 @@ import com.hehandong.androidreader.ui.fragment.third.child.child.WxMenuFragment;
 import com.hehandong.retrofithelper.utils.LogUtils;
 import com.hehandong.retrofithelper.utils.RxUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 import me.yokeyword.fragmentation.SupportFragment;
 
 
 /**
- * Created by YoKeyword on 16/2/4.
+ * @Author dong
+ * @Date 2019-06-04 15:40
+ * @Description 公众号的首页
+ * GitHub：https://github.com/hehandong
+ * Email：hehandong@qq.com
+ * @Version 1.0
  */
-public class ShopFragment extends SupportFragment {
-    public static final String TAG = ShopFragment.class.getSimpleName();
+public class WxFragment extends SupportFragment {
+    public static final String TAG = WxFragment.class.getSimpleName();
 
     private Toolbar mToolbar;
 
-    public static ShopFragment newInstance() {
+    public static WxFragment newInstance() {
         Bundle args = new Bundle();
 
-        ShopFragment fragment = new ShopFragment();
+        WxFragment fragment = new WxFragment();
         fragment.setArguments(args);
         return fragment;
     }
@@ -55,10 +59,6 @@ public class ShopFragment extends SupportFragment {
         mToolbar.setTitle(R.string.public_mark);
 
         if (findChildFragment(MenuListFragment.class) == null) {
-            ArrayList<String> listMenus = new ArrayList<>(Arrays.asList(getResources().getStringArray(R.array.array_menu)));
-
-//            MenuListFragment menuListFragment = MenuListFragment.newInstance(listMenus);
-//            loadRootFragment(R.id.fl_list_container, menuListFragment);
 
             WanAandroidManager.getAPI()
                     .getWxMenuList()
@@ -74,10 +74,6 @@ public class ShopFragment extends SupportFragment {
                         }
                     });
 
-
-            // false:  不加入回退栈;  false: 不显示动画
-//            loadRootFragment(R.id.fl_content_container, ContentFragment.newInstance(listMenus.get(0)), false, false);
-            loadRootFragment(R.id.fl_content_container, WxArticleListFragment.newInstance(null), false, false);
         }
 
 
@@ -105,12 +101,22 @@ public class ShopFragment extends SupportFragment {
     /**
      * 替换加载 内容Fragment
      *
-     * @param fragment
+     * @param model
      */
-    public void switchWxArticleListFragment(WxArticleListFragment fragment) {
-        SupportFragment contentFragment = findChildFragment(WxArticleListFragment.class);
-        if (contentFragment != null) {
-            contentFragment.replaceFragment(fragment, false);
+    public void switchWxArticleListFragment(WanBaseModel<WxArticleListModel> model, boolean isFirst) {
+
+        WxArticleListFragment fragment = WxArticleListFragment.newInstance(model);
+
+        if (isFirst) {
+            //false:  不加入回退栈;  false: 不显示动画
+            loadRootFragment(R.id.fl_content_container, fragment, false, false);
+        } else {
+            SupportFragment contentFragment = findChildFragment(WxArticleListFragment.class);
+            if (contentFragment != null) {
+                contentFragment.replaceFragment(fragment, false);
+            }
         }
+
     }
+
 }
