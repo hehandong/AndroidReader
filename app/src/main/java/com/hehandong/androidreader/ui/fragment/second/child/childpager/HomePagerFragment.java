@@ -114,12 +114,12 @@ public class HomePagerFragment extends SupportFragment implements SwipeRefreshLa
 
     @Override
     public void onRefresh() {
-        mRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mRefreshLayout.setRefreshing(false);
-            }
-        }, 2000);
+//        mRefreshLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mRefreshLayout.setRefreshing(false);
+//            }
+//        }, 2000);
     }
 
     private void scrollToTop() {

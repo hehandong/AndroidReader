@@ -2,6 +2,7 @@ package com.hehandong.androidreader.ui;
 
 import android.support.multidex.MultiDexApplication;
 
+import com.hehandong.retrofithelper.utils.Utils;
 import com.tencent.bugly.crashreport.CrashReport;
 
 
@@ -23,6 +24,7 @@ public class CustomApplication extends MultiDexApplication {
 
         sCustomApplication = this;
 
+        Utils.init(this);
         AppStatusTracker.init(this);
 
         CrashReport.initCrashReport(getApplicationContext(), "e12152e218", false);

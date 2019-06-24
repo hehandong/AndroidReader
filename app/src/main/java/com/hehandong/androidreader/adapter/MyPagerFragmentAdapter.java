@@ -4,8 +4,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.hehandong.androidreader.ui.fragment.HomeFragment;
 import com.hehandong.androidreader.ui.fragment.second.child.childpager.HomePagerFragment;
-import com.hehandong.androidreader.ui.fragment.second.child.childpager.OtherPagerFragment;
 
 
 public class MyPagerFragmentAdapter extends FragmentPagerAdapter {
@@ -21,7 +21,8 @@ public class MyPagerFragmentAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return HomePagerFragment.newInstance();
         } else {
-            return OtherPagerFragment.newInstance(mTitles[position]);
+//            return OtherPagerFragment.newInstance(mTitles[position]);
+            return HomeFragment.newInstance();
         }
     }
 

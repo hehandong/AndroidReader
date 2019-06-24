@@ -4,6 +4,7 @@ import com.hehandong.androidreader.Retrofit.module.WanBaseModel;
 import com.hehandong.androidreader.Retrofit.module.WxArticleListModel;
 import com.hehandong.androidreader.Retrofit.module.WxMenuListModel;
 import com.hehandong.androidreader.Retrofit.module.reponse.HomeListModel;
+import com.hehandong.androidreader.Retrofit.module.reponse.ListModel;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
@@ -32,6 +33,13 @@ public interface WanAndroidAPI {
     //https://www.wanandroid.com/article/list/0/json
     @GET("article/list/{pageIndex}/json")
     Observable<WanBaseModel<HomeListModel>> getHomeList(
+            @Path("pageIndex") int pageIndex
+    );
+
+    //最新项目tab (首页的第二个tab)
+    //https://wanandroid.com/article/listproject/0/json
+    @GET("listproject/{pageIndex}/json")
+    Observable<WanBaseModel<ListModel>> getProjectList(
             @Path("pageIndex") int pageIndex
     );
 }
